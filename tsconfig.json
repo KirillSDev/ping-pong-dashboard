@@ -2,7 +2,8 @@
     "compilerOptions": {
         "allowJs": true,
         "jsx": "react-jsx",
-        "alwaysStrict": true,
-        "baseUrl": "/",
+        "esModuleInterop": true,
+        "baseUrl": ".",
+
     }
 }
