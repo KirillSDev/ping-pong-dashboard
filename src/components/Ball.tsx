@@ -1,9 +1,8 @@
 import { useGSAP } from "@gsap/react";
-import { useLoader } from "@react-three/fiber";
+
 import { useControls } from "leva";
 import { useRef } from "react";
 import { Mesh } from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import gsap from "gsap";
 import MotionPathPlugin from "gsap/MotionPathPlugin";
 
@@ -29,23 +28,62 @@ export const Ball = () => {
       step: 0.01,
     },
   });
+
   useGSAP(() => {
     const tl = gsap.timeline({ repeat: -1 });
     tl.to(model.current.position, {
-      ...getPositions(RACKET_1_TABLE_POS),
-      duration: 0.7,
+      duration: 0.5,
+      ease: "none",
+      motionPath: {
+        path: [
+          {
+            ...getPositions(RACKET_2_POS),
+          },
+          {
+            x: 0,
+            y: 0.5,
+            z: 0,
+          },
+          {
+            ...getPositions(RACKET_1_TABLE_POS),
+          },
+        ],
+        autoRotate: true,
+        align: undefined,
+        alignOrigin: [0.5, 0.5],
+      },
     });
     tl.to(model.current.position, {
+      ease: "none",
+      duration: 0.4,
       ...getPositions(RACKET_1_POS),
-      duration: 0.4,
     });
     tl.to(model.current.position, {
-      ...getPositions(RACKET_2_TABLE_POS),
       duration: 0.7,
+      ease: "none",
+      motionPath: {
+        path: [
+          {
+            ...getPositions(RACKET_1_POS),
+          },
+          {
+            x: 0,
+            y: 0.5,
+            z: 0,
+          },
+          {
+            ...getPositions(RACKET_2_TABLE_POS),
+          },
+        ],
+        autoRotate: false,
+        align: undefined,
+        alignOrigin: [0.5, 0.5],
+      },
     });
     tl.to(model.current.position, {
-      ...getPositions(RACKET_2_POS),
+      ease: "none",
       duration: 0.4,
+      ...getPositions(RACKET_2_POS),
     });
   }, []);
   return (
