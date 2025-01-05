@@ -1,9 +1,12 @@
-import { Clone } from "@react-three/drei";
-import { useLoader } from "@react-three/fiber";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { Clone, CloneProps } from "@react-three/drei";
+import { GroupProps, useLoader } from "@react-three/fiber";
 import { useControls } from "leva";
-import { FC, useEffect } from "react";
-import { Mesh, MeshStandardMaterial } from "three";
+import { FC, useEffect, useRef } from "react";
+import { Group, Mesh, MeshStandardMaterial, Object3DEventMap } from "three";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
+import { ForwardRefComponent } from "@react-three/drei/helpers/ts-utils";
 
 const OBJ = "racket.obj";
 
@@ -23,23 +26,12 @@ export const Racket: FC<{
       step: 0.1,
     },
   });
-  useEffect(() => {
-    model.traverse((child) => {
-      if ((child as Mesh).isMesh) {
-        const mesh = child as Mesh;
-        const material = new MeshStandardMaterial({
-          color: "black",
-        });
-        mesh.material = material;
-        mesh.material.needsUpdate = true;
-      }
-    });
-  }, [model, id]);
 
   return (
     <Clone
       object={model}
       scale={0.02}
+      inject={<meshStandardMaterial color="black" />}
       position={position}
       rotation={rotation}
     />

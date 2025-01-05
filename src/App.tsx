@@ -5,6 +5,7 @@ import { OrbitControls } from "@react-three/drei";
 import { Light } from "./components/Light";
 import { PlaneFloor } from "./components/PlaneFloor";
 import { Racket } from "./components/Racket";
+import { Ball } from "./components/Ball";
 
 interface RacketSettings {
   position: [number, number, number];
@@ -26,7 +27,7 @@ export const App: FC = () => {
     <StrictMode>
       <div className="container">
         <Canvas shadows camera={{ position: [4, 2, 2], fov: 65 }}>
-          {/* <OrbitControls /> */}
+          <OrbitControls />
           <Light />
           <PingPongTable />
           <Racket
@@ -35,6 +36,7 @@ export const App: FC = () => {
             racketRotation={RACKET_1.rotation}
             id="RacketPos_1"
           />
+          <Ball />
           <Racket
             key="RacketPos_2"
             racketPosition={RACKET_2.position}

@@ -18,12 +18,6 @@ export const PingPongTable: FC = () => {
         const mesh = child as Mesh;
         mesh.castShadow = true;
         mesh.receiveShadow = true;
-        if (mesh.material) {
-          const material = mesh.material as Material;
-          if ("side" in material) {
-            (material as any).side = DoubleSide;
-          }
-        }
       }
     });
   }, [model]);
