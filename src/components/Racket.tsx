@@ -1,21 +1,18 @@
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { Clone, CloneProps } from "@react-three/drei";
-import { GroupProps, useLoader } from "@react-three/fiber";
+import { Clone } from "@react-three/drei";
+import { useLoader } from "@react-three/fiber";
 import { useControls } from "leva";
-import { FC, useEffect, useRef } from "react";
-import { Group, Mesh, MeshStandardMaterial, Object3DEventMap } from "three";
+import { FC } from "react";
+import { PositionType } from "src/types";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
-import { ForwardRefComponent } from "@react-three/drei/helpers/ts-utils";
 
-const OBJ = "racket.obj";
+const OBJ_FILE = "racket.obj";
 
 export const Racket: FC<{
   id: string;
-  racketPosition: [number, number, number];
-  racketRotation: [number, number, number];
+  racketPosition: PositionType;
+  racketRotation: PositionType;
 }> = ({ id, racketPosition, racketRotation }) => {
-  const model = useLoader(OBJLoader, OBJ);
+  const model = useLoader(OBJLoader, OBJ_FILE);
   const { position, rotation } = useControls(id, {
     position: {
       value: racketPosition,
@@ -26,7 +23,6 @@ export const Racket: FC<{
       step: 0.1,
     },
   });
-
   return (
     <Clone
       object={model}

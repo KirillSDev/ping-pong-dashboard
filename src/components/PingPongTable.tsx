@@ -2,7 +2,7 @@ import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import { useLoader } from "@react-three/fiber";
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
 import { FC, useEffect } from "react";
-import { DoubleSide, Material, Mesh } from "three";
+import { Mesh } from "three";
 
 const MTL_FILE = "table_tennis.mtl";
 const OBJ = "table_tennis.obj";

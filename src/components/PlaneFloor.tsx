@@ -1,4 +1,3 @@
-import { useThree, useFrame } from "@react-three/fiber";
 import { FC } from "react";
 import { DoubleSide } from "three";
 

@@ -1,12 +1,11 @@
 import { useGSAP } from "@gsap/react";
-
 import { useControls } from "leva";
-import { useRef } from "react";
+import { FC, useRef } from "react";
 import { Mesh } from "three";
 import gsap from "gsap";
 import MotionPathPlugin from "gsap/MotionPathPlugin";
+import { PositionType } from "src/types";
 
-type PositionType = [number, number, number];
 const RACKET_1_TABLE_POS: PositionType = [-1.19, 0.11, 0.29];
 const RACKET_1_POS: PositionType = [-2.93, 0.83, 0.62];
 const RACKET_2_TABLE_POS: PositionType = [1.92, 0.11, -0.41];
@@ -20,7 +19,7 @@ const getPositions = (position: PositionType) => {
     z: position[2],
   };
 };
-export const Ball = () => {
+export const Ball: FC<{ tl: gsap.core.Timeline }> = ({ tl }) => {
   const model = useRef<Mesh>(null);
   const { position } = useControls("Ball", {
     position: {
@@ -30,7 +29,6 @@ export const Ball = () => {
   });
 
   useGSAP(() => {
-    const tl = gsap.timeline({ repeat: -1 });
     tl.to(model.current.position, {
       duration: 0.5,
       ease: "none",
@@ -48,9 +46,6 @@ export const Ball = () => {
             ...getPositions(RACKET_1_TABLE_POS),
           },
         ],
-        autoRotate: true,
-        align: undefined,
-        alignOrigin: [0.5, 0.5],
       },
     });
     tl.to(model.current.position, {
