@@ -7,6 +7,7 @@ import { PlaneFloor } from "./components/PlaneFloor";
 import { Racket } from "./components/Racket";
 import { Ball } from "./components/Ball";
 import { RacketSettings } from "./types";
+import gsap from "gsap";
 
 const RACKET_1: RacketSettings = {
   position: [-3, 0.8, 0.5],
@@ -31,12 +32,14 @@ export const App: FC = () => {
             racketPosition={RACKET_1.position}
             racketRotation={RACKET_1.rotation}
             id="RacketPos_1"
+            tl={tl}
           />
           <Ball tl={tl} />
           <Racket
             racketPosition={RACKET_2.position}
             racketRotation={RACKET_2.rotation}
             id="RacketPos_2"
+            tl={tl}
           />
           <PlaneFloor />
         </Canvas>

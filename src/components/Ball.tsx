@@ -54,7 +54,7 @@ export const Ball: FC<{ tl: gsap.core.Timeline }> = ({ tl }) => {
       ...getPositions(RACKET_1_POS),
     });
     tl.to(model.current.position, {
-      duration: 0.7,
+      duration: 0.5,
       ease: "none",
       motionPath: {
         path: [
