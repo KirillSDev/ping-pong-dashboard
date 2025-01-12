@@ -14,8 +14,7 @@ export const Racket: FC<{
   id: string;
   racketPosition: PositionType;
   racketRotation: PositionType;
-  tl: gsap.core.Timeline;
-}> = ({ id, racketPosition, racketRotation, tl }) => {
+}> = ({ id, racketPosition, racketRotation }) => {
   const model = useLoader(OBJLoader, OBJ_FILE);
   const racketRef = useRef<Group>(null);
   const { position, rotation } = useControls(id, {

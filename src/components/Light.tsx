@@ -1,7 +1,13 @@
 import { useHelper } from "@react-three/drei";
 import { useControls } from "leva";
 import { FC, MutableRefObject, useRef } from "react";
-import { DirectionalLight, Vector3, DirectionalLightHelper } from "three";
+import {
+  DirectionalLight,
+  Vector3,
+  DirectionalLightHelper,
+  SpotLight,
+  SpotLightHelper,
+} from "three";
 
 const useLightControls = (
   directionalLightRef: MutableRefObject<DirectionalLight>
@@ -12,7 +18,7 @@ const useLightControls = (
       step: 0.01,
     },
     intensity: {
-      value: 30,
+      value: 5,
       step: 1,
     },
     shadowMapSizeWidth: {
@@ -32,9 +38,39 @@ const useLightControls = (
 
 export const Light: FC = () => {
   const directionalLightRef = useRef<DirectionalLight>(null);
+  const spotLightRef = useRef<SpotLight>(null);
   const { position, shadowMapSizeHeight, shadowMapSizeWidth, intensity } =
     useLightControls(directionalLightRef);
   useHelper(directionalLightRef, DirectionalLightHelper, 1, "yellow");
+  useHelper(spotLightRef, SpotLightHelper, 1);
+  const {
+    position: reactAreaPos,
+    intensity: reactAreaInt,
+    width,
+    height,
+    distance,
+  } = useControls("React Area Light", {
+    position: {
+      value: { x: 0, y: 0, z: 0 },
+      step: 0.01,
+    },
+    intensity: {
+      value: 100,
+      step: 1,
+    },
+    distance: {
+      value: 10,
+      step: 1,
+    },
+    width: {
+      value: 2,
+      step: 0.1,
+    },
+    height: {
+      value: 2,
+      step: 0.1,
+    },
+  });
   return (
     <>
       <directionalLight
@@ -45,8 +81,19 @@ export const Light: FC = () => {
         shadow-mapSize-width={shadowMapSizeWidth}
         shadow-mapSize-height={shadowMapSizeHeight}
       />
-      <spotLight position={new Vector3(0, position.y, 0)} intensity={100} />
-      <ambientLight intensity={10} color={"white"} />
+      <pointLight
+        position={new Vector3(reactAreaPos.x, reactAreaPos.y, reactAreaPos.z)}
+        intensity={reactAreaInt}
+        distance={distance}
+        color={"green"}
+      />
+      {/* <ambientLight intensity={1000} />
+      <spotLight
+        ref={spotLightRef}
+        position={new Vector3(0, 2, 0)}
+        distance={100}
+        intensity={1000}
+      /> */}
     </>
   );
 };

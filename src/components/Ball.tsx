@@ -1,10 +1,11 @@
 import { useGSAP } from "@gsap/react";
 import { useControls } from "leva";
 import { FC, useRef } from "react";
-import { Mesh } from "three";
+import { Mesh, TextureLoader } from "three";
 import gsap from "gsap";
 import MotionPathPlugin from "gsap/MotionPathPlugin";
 import { PositionType } from "src/types";
+import { useLoader } from "@react-three/fiber";
 
 const RACKET_1_TABLE_POS: PositionType = [-1.19, 0.11, 0.29];
 const RACKET_1_POS: PositionType = [-2.93, 0.83, 0.62];
@@ -21,6 +22,7 @@ const getPositions = (position: PositionType) => {
 };
 export const Ball: FC<{ tl: gsap.core.Timeline }> = ({ tl }) => {
   const model = useRef<Mesh>(null);
+  const logoTexture = useLoader(TextureLoader, "ball-logo-texture.jpg");
   const { position } = useControls("Ball", {
     position: {
       value: RACKET_2_POS,
@@ -84,7 +86,13 @@ export const Ball: FC<{ tl: gsap.core.Timeline }> = ({ tl }) => {
   return (
     <mesh ref={model} position={position} castShadow receiveShadow>
       <sphereGeometry args={[0.05, 32, 32]} />
-      <meshStandardMaterial color={"black"} />
+      <meshStandardMaterial
+        color={"#808080"}
+        roughness={0.2}
+        metalness={0}
+        emissive={"#eeeeee"}
+        emissiveIntensity={0.05}
+      />
     </mesh>
   );
 };
