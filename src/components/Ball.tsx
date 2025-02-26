@@ -6,6 +6,7 @@ import gsap from "gsap";
 import MotionPathPlugin from "gsap/MotionPathPlugin";
 import { PositionType } from "src/types";
 import { useLoader } from "@react-three/fiber";
+import { Trail } from "@react-three/drei";
 
 const RACKET_1_TABLE_POS: PositionType = [-1.19, 0.11, 0.29];
 const RACKET_1_POS: PositionType = [-2.93, 0.83, 0.62];
@@ -84,15 +85,27 @@ export const Ball: FC<{ tl: gsap.core.Timeline }> = ({ tl }) => {
     });
   }, []);
   return (
-    <mesh ref={model} position={position} castShadow receiveShadow>
-      <sphereGeometry args={[0.05, 32, 32]} />
-      <meshStandardMaterial
-        color={"#808080"}
-        roughness={0.2}
-        metalness={0}
-        emissive={"#eeeeee"}
-        emissiveIntensity={0.05}
-      />
-    </mesh>
+    <Trail
+      width={0.2}
+      color={"white"}
+      length={1}
+      decay={1}
+      local={false}
+      stride={0}
+      interval={1}
+      target={undefined}
+      attenuation={(width) => width}
+    >
+      <mesh ref={model} position={position} castShadow receiveShadow>
+        <sphereGeometry args={[0.05, 32, 32]} />
+        <meshStandardMaterial
+          color={"#808080"}
+          roughness={0.2}
+          metalness={0}
+          emissive={"#eeeeee"}
+          emissiveIntensity={0.05}
+        />
+      </mesh>
+    </Trail>
   );
 };
