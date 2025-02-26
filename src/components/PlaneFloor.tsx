@@ -10,7 +10,7 @@ export const PlaneFloor: FC = () => {
       receiveShadow
     >
       <planeGeometry />
-      <meshStandardMaterial attach="material" color="black" side={DoubleSide} />
+      <meshStandardMaterial attach="material" color="red" side={DoubleSide} />
     </mesh>
   );
 };

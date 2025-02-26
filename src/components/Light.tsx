@@ -7,6 +7,7 @@ import {
   DirectionalLightHelper,
   SpotLight,
   SpotLightHelper,
+  Color,
 } from "three";
 
 const useLightControls = (
@@ -42,7 +43,7 @@ export const Light: FC = () => {
   const { position, shadowMapSizeHeight, shadowMapSizeWidth, intensity } =
     useLightControls(directionalLightRef);
   useHelper(directionalLightRef, DirectionalLightHelper, 1, "yellow");
-  useHelper(spotLightRef, SpotLightHelper, 1);
+  // useHelper(spotLightRef, SpotLightHelper, 1);
   const {
     position: reactAreaPos,
     intensity: reactAreaInt,
@@ -85,15 +86,15 @@ export const Light: FC = () => {
         position={new Vector3(reactAreaPos.x, reactAreaPos.y, reactAreaPos.z)}
         intensity={reactAreaInt}
         distance={distance}
-        color={"green"}
+        color={"white"}
       />
-      {/* <ambientLight intensity={1000} />
       <spotLight
         ref={spotLightRef}
         position={new Vector3(0, 2, 0)}
         distance={100}
-        intensity={1000}
-      /> */}
+        intensity={100}
+        color={new Color("red")}
+      />
     </>
   );
 };

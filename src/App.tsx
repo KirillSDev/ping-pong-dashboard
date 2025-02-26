@@ -8,8 +8,9 @@ import { Racket } from "./components/Racket";
 import { Ball } from "./components/Ball";
 import { RacketSettings } from "./types";
 import gsap from "gsap";
-import { DoubleSide } from "three";
+import { Color, DoubleSide, Fog } from "three";
 import { useControls } from "leva";
+import { DashBoard } from "./components/Dashboard";
 
 const RACKET_1: RacketSettings = {
   position: [-3, 0.8, 0.5],
@@ -24,17 +25,24 @@ const RACKET_2: RacketSettings = {
 export const App: FC = () => {
   const { firstTeamText, secondTeamText } = useControls("Teams", {
     firstTeamText: {
-      value: "team_1",
+      value: "Spin Masters",
     },
     secondTeamText: {
-      value: "team_2",
+      value: "Paddle Ninjas",
     },
   });
   const tl = gsap.timeline({ repeat: -1 });
   return (
     <StrictMode>
       <div className="container">
-        <Canvas shadows camera={{ position: [4, 2, 2], fov: 65 }}>
+        <DashBoard />
+        <Canvas
+          scene={{
+            background: new Color("rgb(188, 212, 239)"),
+          }}
+          shadows
+          camera={{ position: [10, 4, 10], fov: 65 }}
+        >
           <OrbitControls />
           <Light />
           <PingPongTable />
@@ -56,15 +64,13 @@ export const App: FC = () => {
             receiveShadow
             position={[
               RACKET_1.position[0],
-              RACKET_1.position[1] + 0.8,
+              RACKET_1.position[1] + 1.8,
               RACKET_1.position[2],
             ]}
             material={<meshPhysicalMaterial side={DoubleSide} opacity={0.1} />}
           >
-            <div
-              style={{ color: "white", textAlign: "center", fontSize: "20px" }}
-            >
-              {firstTeamText}
+            <div className="team-text--container">
+              <div className="team-text">{firstTeamText}</div>
             </div>
           </Html>
           <Html
@@ -73,15 +79,13 @@ export const App: FC = () => {
             receiveShadow
             position={[
               RACKET_2.position[0],
-              RACKET_2.position[1] + 0.8,
+              RACKET_2.position[1] + 1.8,
               RACKET_2.position[2],
             ]}
             material={<meshPhysicalMaterial side={DoubleSide} opacity={0.1} />}
           >
-            <div
-              style={{ color: "white", textAlign: "center", fontSize: "20px" }}
-            >
-              {secondTeamText}
+            <div className="team-text--container">
+              <div className="team-text">{secondTeamText}</div>
             </div>
           </Html>
         </Canvas>
