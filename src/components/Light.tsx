@@ -42,7 +42,7 @@ export const Light: FC = () => {
   const spotLightRef = useRef<SpotLight>(null);
   const { position, shadowMapSizeHeight, shadowMapSizeWidth, intensity } =
     useLightControls(directionalLightRef);
-  useHelper(directionalLightRef, DirectionalLightHelper, 1, "yellow");
+  // useHelper(directionalLightRef, DirectionalLightHelper, 1, "yellow");
   // useHelper(spotLightRef, SpotLightHelper, 1);
   const {
     position: reactAreaPos,

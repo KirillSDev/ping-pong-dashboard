@@ -1,5 +1,5 @@
 import { FC, StrictMode } from "react";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { PingPongTable } from "./components/PingPongTable";
 import { OrbitControls, Html } from "@react-three/drei";
 import { Light } from "./components/Light";
@@ -9,8 +9,8 @@ import { Ball } from "./components/Ball";
 import { RacketSettings } from "./types";
 import gsap from "gsap";
 import { Color, DoubleSide, Fog } from "three";
-import { useControls } from "leva";
-import { DashBoard } from "./components/Dashboard";
+import { useControls, Leva } from "leva";
+import { DashBoard } from "./components/DashBoard";
 
 const RACKET_1: RacketSettings = {
   position: [-3, 0.8, 0.5],
@@ -90,6 +90,7 @@ export const App: FC = () => {
           </Html>
         </Canvas>
       </div>
+      <Leva collapsed hidden={false} />
     </StrictMode>
   );
 };
