@@ -24,6 +24,8 @@ const RACKET_2: RacketSettings = {
 
 export const App: FC = () => {
   const [firstTeamPoints, setFirstTeamPoints] = useState(0);
+  let firstTeamText1;
+  let secondTeamText1;
   const [secondTeamPoints, setSecondTeamPoints] = useState(0);
   const [firstTeamWins, setfirstTeamWins] = useState(0);
   const [secondTeamWins, setSecondTeamWins] = useState(0);
@@ -73,6 +75,24 @@ export const App: FC = () => {
           return prev;
         });
       }
+      if (event.key === "9") {
+        if (firstTeamText1 === undefined || secondTeamText1 === undefined) {
+          firstTeamText1 = secondTeamText;
+          secondTeamText1 = firstTeamText;
+        } else {
+          const firstTeamText2 = firstTeamText1;
+          firstTeamText1 = secondTeamText1;
+          secondTeamText1 = firstTeamText2;
+        }
+        set({
+          firstTeamText: firstTeamText1,
+          secondTeamText: secondTeamText1,
+        });
+        console.log(secondTeamPoints);
+        const secondTeamWins1 = secondTeamWins;
+        setSecondTeamWins(firstTeamWins);
+        setfirstTeamWins(secondTeamWins1);
+      }
       if (event.key === "-") {
         setFirstTeamPoints(0);
         setSecondTeamPoints(0);
@@ -87,14 +107,14 @@ export const App: FC = () => {
       document.removeEventListener("keydown", keyDownListener);
     };
   }, []);
-  const { firstTeamText, secondTeamText } = useControls("Teams", {
+  const [{ firstTeamText, secondTeamText }, set] = useControls(() => ({
     firstTeamText: {
       value: "Spin Masters",
     },
     secondTeamText: {
       value: "Paddle Ninjas",
     },
-  });
+  }));
   const tl = gsap.timeline({ repeat: -1 });
   return (
     <StrictMode>
@@ -129,9 +149,9 @@ export const App: FC = () => {
             font={"roboto.json"}
             size={0.4}
             position={[-4, 2, 6]}
-            rotation={[0, Math.PI / 3.5, 0]}
+            rotation={[0, Math.PI / 2.8, 0]}
           >
-            {firstTeamText}: {firstTeamWins}
+            {firstTeamText} : {firstTeamWins}
             <meshStandardMaterial color={new Color("#1a0d00")} />
           </Text3D>
           {/* <Html
@@ -155,7 +175,7 @@ export const App: FC = () => {
             position={[3, 2, -0.5]}
             rotation={[0, Math.PI / 6, 0]}
           >
-            {secondTeamWins} :{secondTeamText}
+            {secondTeamWins} : {secondTeamText}
             <meshStandardMaterial color={new Color("#1a0d00")} />
           </Text3D>
           {/* <Html
