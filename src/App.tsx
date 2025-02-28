@@ -1,7 +1,7 @@
-import { FC, StrictMode } from "react";
+import { FC, StrictMode, useEffect, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { PingPongTable } from "./components/PingPongTable";
-import { OrbitControls, Html } from "@react-three/drei";
+import { OrbitControls, Html, Text3D } from "@react-three/drei";
 import { Light } from "./components/Light";
 import { PlaneFloor } from "./components/PlaneFloor";
 import { Racket } from "./components/Racket";
@@ -23,6 +23,70 @@ const RACKET_2: RacketSettings = {
 };
 
 export const App: FC = () => {
+  const [firstTeamPoints, setFirstTeamPoints] = useState(0);
+  const [secondTeamPoints, setSecondTeamPoints] = useState(0);
+  const [firstTeamWins, setfirstTeamWins] = useState(0);
+  const [secondTeamWins, setSecondTeamWins] = useState(0);
+  useEffect(() => {
+    const keyDownListener = (event: KeyboardEvent) => {
+      if (event.key === "1") {
+        setFirstTeamPoints((prev) => prev + 1);
+      }
+      if (event.key === "2") {
+        setSecondTeamPoints((prev) => prev + 1);
+      }
+      if (event.key === "3") {
+        setFirstTeamPoints((prev) => {
+          if (prev !== 0) {
+            return prev - 1;
+          }
+          return prev;
+        });
+      }
+      if (event.key === "4") {
+        setSecondTeamPoints((prev) => {
+          if (prev !== 0) {
+            return prev - 1;
+          }
+          return prev;
+        });
+      }
+      if (event.key === "5") {
+        setfirstTeamWins((prev) => prev + 1);
+      }
+      if (event.key === "6") {
+        setSecondTeamWins((prev) => prev + 1);
+      }
+      if (event.key === "7") {
+        setfirstTeamWins((prev) => {
+          if (prev !== 0) {
+            return prev - 1;
+          }
+          return prev;
+        });
+      }
+      if (event.key === "8") {
+        setSecondTeamWins((prev) => {
+          if (prev !== 0) {
+            return prev - 1;
+          }
+          return prev;
+        });
+      }
+      if (event.key === "-") {
+        setFirstTeamPoints(0);
+        setSecondTeamPoints(0);
+      }
+      if (event.key === "=") {
+        setfirstTeamWins(0);
+        setSecondTeamWins(0);
+      }
+    };
+    document.addEventListener("keydown", keyDownListener);
+    return () => {
+      document.removeEventListener("keydown", keyDownListener);
+    };
+  }, []);
   const { firstTeamText, secondTeamText } = useControls("Teams", {
     firstTeamText: {
       value: "Spin Masters",
@@ -35,7 +99,10 @@ export const App: FC = () => {
   return (
     <StrictMode>
       <div className="container">
-        <DashBoard />
+        <DashBoard
+          firstTeamPoints={firstTeamPoints}
+          secondTeamPoints={secondTeamPoints}
+        />
         <Canvas
           scene={{
             background: new Color("rgb(188, 212, 239)"),
@@ -58,7 +125,16 @@ export const App: FC = () => {
             id="RacketPos_2"
           />
           <PlaneFloor />
-          <Html
+          <Text3D
+            font={"roboto.json"}
+            size={0.4}
+            position={[-4, 2, 6]}
+            rotation={[0, Math.PI / 3.5, 0]}
+          >
+            {firstTeamText}: {firstTeamWins}
+            <meshStandardMaterial color={new Color("#1a0d00")} />
+          </Text3D>
+          {/* <Html
             occlude
             castShadow
             receiveShadow
@@ -72,8 +148,17 @@ export const App: FC = () => {
             <div className="team-text--container">
               <div className="team-text">{firstTeamText}</div>
             </div>
-          </Html>
-          <Html
+          </Html> */}
+          <Text3D
+            font={"roboto.json"}
+            size={0.4}
+            position={[3, 2, -0.5]}
+            rotation={[0, Math.PI / 6, 0]}
+          >
+            {secondTeamWins} :{secondTeamText}
+            <meshStandardMaterial color={new Color("#1a0d00")} />
+          </Text3D>
+          {/* <Html
             occlude
             castShadow
             receiveShadow
@@ -87,7 +172,7 @@ export const App: FC = () => {
             <div className="team-text--container">
               <div className="team-text">{secondTeamText}</div>
             </div>
-          </Html>
+          </Html> */}
         </Canvas>
       </div>
       <Leva collapsed hidden={false} />

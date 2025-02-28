@@ -14,9 +14,9 @@ export const PlaneFloor: FC = () => {
 
     const angle = t * 0.2;
 
-    const x = Math.sin(t * 0.8) + 8;
+    const x = Math.sin(t * 0.8) + 10;
 
-    const z = Math.sin(t * 0.8) + 8;
+    const z = Math.sin(t * 0.8 - 4) + 8;
 
     const y = Math.sin(angle * 2) + 4;
 
